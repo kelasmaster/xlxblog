@@ -14,4 +14,10 @@ def home():
     return render_template('index.html', posts=blog_posts)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Generate static index.html file
+    with app.app_context():
+        blog_posts = load_blog_data()
+        static_html = render_template('index.html', posts=blog_posts)
+        with open('index.html', 'w', encoding='utf-8') as f:
+            f.write(static_html)
+    print("Static index.html generated successfully.")
